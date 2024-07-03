@@ -1,39 +1,34 @@
 
-list_length = 3;
-const randomIndex = Math.floor(Math.random() * list_length);
+const LIST_LENGTH = 5;
+const IMAGE_PATH = "/pictures/rand_pictures/p";
+const MESSAGE_FILE = "/messages/allMessages.txt";
+const RANDOM_IMAGE_ID = 'random-image';
+const RANDOM_MESSAGE_ID = 'random-message';
 
 
-const imageUrls = [];
-const messageUrls = [];
-
-for (let i = 1; i <= list_length; i++){
-    imageUrls.push("/pictures/rand_pictures/p"+i+".png");
-    messageUrls.push("/messages/m"+i+".txt");
+function generateRandomImages(randomIndex){
+    const imageUrl =  IMAGE_PATH + randomIndex + ".jpg";
+    document.getElementById(RANDOM_IMAGE_ID).src = imageUrl;
 }
 
-async function fetchMessage(url){
+async function fetchMessages(url){
     const response = await fetch(url);
     const text = await response.text();
-    return text;
+    return text.split('\n');
 }
 
-function generateRandomImages(){
-    document.getElementById('random-image').src = imageUrls[randomIndex];
-}
-
-async function generateRandomMessages(){
-    const message = await fetchMessage(messageUrls[randomIndex]);
-    document.getElementById('random-message').innerText = message;
+async function generateRandomMessages(randomIndex){
+    const messages = await fetchMessages(MESSAGE_FILE);
+    console.log(messages);
+    const randomMessage = messages[randomIndex].trim();
+    document.getElementById(RANDOM_MESSAGE_ID).innerText = randomMessage;
 }
 
 async function generateRandomContent(){
-    generateRandomImages();
-    await generateRandomMessages();
+    const randomIndex = Math.floor(Math.random() * LIST_LENGTH);
+    generateRandomImages(randomIndex);
+    await generateRandomMessages(randomIndex);
 }
 
 generateRandomContent();
-
-
-
-
 
