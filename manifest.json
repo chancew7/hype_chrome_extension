@@ -15,7 +15,7 @@
         {
             "js": ["scripts/content.js"],
             "matches": [
-                "https://fakeurlidktest.com"
+                "*://coolmathgames.com/*"
             ]
         }
     ], 
